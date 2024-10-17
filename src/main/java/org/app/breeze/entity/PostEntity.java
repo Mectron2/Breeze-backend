@@ -11,7 +11,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Temporal;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -33,12 +34,15 @@ public class PostEntity {
 
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     public PostEntity(String title, String imageUrl, String content) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.content = content;
-        this.createdAt = new Date();
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public PostEntity() {
     }
 }
