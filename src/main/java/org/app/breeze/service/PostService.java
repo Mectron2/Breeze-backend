@@ -4,10 +4,10 @@ import org.app.breeze.DTO.PostDto;
 import org.app.breeze.entity.PostEntity;
 import org.app.breeze.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,7 +21,7 @@ public class PostService {
     }
 
     public List<PostEntity> getAllPosts() {
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public PostEntity savePost(@RequestBody PostDto postDto) {
