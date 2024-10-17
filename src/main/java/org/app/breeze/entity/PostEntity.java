@@ -34,20 +34,4 @@ public class PostEntity {
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-
-    public PostEntity() {
-    }
-
-    public PostEntity(String title, String content) {
-        this.title = title;
-        this.content = content;
-        this.createdAt = new Date();
-    }
-
-    public PostEntity(String title, String content, String imageUrl) {
-        this.title = title;
-        this.content = content;
-        this.imageUrl = imageUrl;
-        this.createdAt = new Date();
-    }
 }
