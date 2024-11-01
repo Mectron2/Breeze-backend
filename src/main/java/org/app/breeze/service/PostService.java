@@ -2,6 +2,7 @@ package org.app.breeze.service;
 
 import org.app.breeze.DTO.PostDto;
 import org.app.breeze.entity.PostEntity;
+import org.app.breeze.enums.ContentType;
 import org.app.breeze.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -25,7 +26,13 @@ public class PostService {
     }
 
     public PostEntity savePost(@RequestBody PostDto postDto) {
-        PostEntity postEntity = new PostEntity(postDto.getTitle(), postDto.getImageUrl(), postDto.getContent());
+        PostEntity postEntity = new PostEntity(
+                postDto.getUserId(),
+                postDto.getTitle(),
+                postDto.getImageUrl(),
+                postDto.getContent(),
+                ContentType.valueOf(postDto.getContentType().toUpperCase())
+        );
         return postRepository.save(postEntity);
     }
 
