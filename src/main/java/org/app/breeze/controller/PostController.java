@@ -1,7 +1,7 @@
 package org.app.breeze.controller;
 
 import org.app.breeze.DTO.PostDto;
-import org.app.breeze.entity.PostEntity;
+import org.app.breeze.entity.Post;
 import org.app.breeze.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,18 +27,18 @@ public class PostController {
     }
 
     @GetMapping
-    public List<PostEntity> getAllPosts() {
+    public List<Post> getAllPosts() {
         return postService.getAllPosts();
     }
 
     @PostMapping
-    public ResponseEntity<PostEntity> createPost(@RequestBody PostDto postDto) {
-        PostEntity savedPost = postService.savePost(postDto);
+    public ResponseEntity<Post> createPost(@RequestBody PostDto postDto) {
+        Post savedPost = postService.savePost(postDto);
         return new ResponseEntity<>(savedPost, HttpStatus.CREATED);
     }
 
     @GetMapping("/search")
-    public List<PostEntity> findPostsByTitle(@RequestParam String title) {
+    public List<Post> findPostsByTitle(@RequestParam String title) {
         return postService.findPostsByTitle(title);
     }
 }

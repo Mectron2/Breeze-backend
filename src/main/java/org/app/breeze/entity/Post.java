@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @Table(name = "post")
-public class PostEntity {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,7 +60,7 @@ public class PostEntity {
         this.createdAt = LocalDateTime.now();
     }
 
-    public PostEntity(Long userId, String title, String imageUrl, String content, ContentType contentType) {
+    public Post(Long userId, String title, String imageUrl, String content, ContentType contentType) {
         this.userId = userId;
         this.title = title;
         this.imageUrl = imageUrl;
@@ -69,6 +69,6 @@ public class PostEntity {
     }
 
     // Пустой конструктор
-    public PostEntity() {
+    public Post() {
     }
 }

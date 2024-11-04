@@ -1,7 +1,7 @@
 package org.app.breeze.service;
 
 import org.app.breeze.DTO.PostDto;
-import org.app.breeze.entity.PostEntity;
+import org.app.breeze.entity.Post;
 import org.app.breeze.enums.ContentType;
 import org.app.breeze.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +21,12 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public List<PostEntity> getAllPosts() {
+    public List<Post> getAllPosts() {
         return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
-    public PostEntity savePost(@RequestBody PostDto postDto) {
-        PostEntity postEntity = new PostEntity(
+    public Post savePost(@RequestBody PostDto postDto) {
+        Post postEntity = new Post(
                 postDto.getUserId(),
                 postDto.getTitle(),
                 postDto.getImageUrl(),
@@ -36,7 +36,7 @@ public class PostService {
         return postRepository.save(postEntity);
     }
 
-    public List<PostEntity> findPostsByTitle(String title) {
+    public List<Post> findPostsByTitle(String title) {
         return postRepository.findByTitleContaining(title);
     }
 }
