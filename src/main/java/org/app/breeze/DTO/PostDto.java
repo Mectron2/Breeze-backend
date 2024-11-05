@@ -8,7 +8,7 @@ import lombok.Setter;
 public class PostDto {
     private Long userId;
     private String title;
-    private String imageUrl;
+    private String imagePath;
     private String content;
     private String contentType;
 }

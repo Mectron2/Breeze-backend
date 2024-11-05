@@ -2,7 +2,6 @@ package org.app.breeze.service;
 
 import org.app.breeze.entity.User;
 import org.app.breeze.repository.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

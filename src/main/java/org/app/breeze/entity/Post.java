@@ -34,8 +34,8 @@ public class Post {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(name = "image_path")
+    private String imagePath;
 
     @Column(name = "content", nullable = false)
     private String content;
@@ -60,10 +60,10 @@ public class Post {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Post(Long userId, String title, String imageUrl, String content, ContentType contentType) {
+    public Post(Long userId, String title, String imagePath, String content, ContentType contentType) {
         this.userId = userId;
         this.title = title;
-        this.imageUrl = imageUrl;
+        this.imagePath = imagePath;
         this.content = content;
         this.contentType = contentType;
     }

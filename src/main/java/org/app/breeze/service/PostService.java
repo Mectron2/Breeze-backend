@@ -29,7 +29,7 @@ public class PostService {
         Post postEntity = new Post(
                 postDto.getUserId(),
                 postDto.getTitle(),
-                postDto.getImageUrl(),
+                postDto.getImagePath(),
                 postDto.getContent(),
                 ContentType.valueOf(postDto.getContentType().toUpperCase())
         );
