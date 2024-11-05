@@ -10,6 +10,7 @@ import org.app.breeze.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +50,7 @@ public class PostController {
         return postService.findPostsByTitle(title);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getById")
     public ResponseEntity<PostDto> getPostById(@RequestParam("postId") Long id) {
         Post post = postRepository.findById(id)
