@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS roles (
+    id SERIAL PRIMARY KEY,
+    role VARCHAR(30) NOT NULL
+);
+
+ALTER TABLE users
+ADD COLUMN role_id INT;
+
+ALTER TABLE users
+ADD CONSTRAINT fk_role
+FOREIGN KEY (role_id) REFERENCES roles(id);
+
+INSERT INTO roles(role) values
+('USER'),
+('ADMIN');
+
+ALTER TABLE users
+ALTER COLUMN role_id SET DEFAULT 1;
