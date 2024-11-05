@@ -19,7 +19,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public List<CommentDTO> getCommentsForPost(int postId) {
+    public List<CommentDTO> getCommentsForPost(Long postId) {
         List<Comment> comments = commentRepository.getCommentsOnPost(postId);
         return comments.stream()
                 .map(comment -> {

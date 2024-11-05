@@ -22,6 +22,7 @@ import org.app.breeze.DTO.UserDTO;
 import org.app.breeze.enums.ContentType;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
@@ -48,12 +49,6 @@ public class Post {
     @Enumerated(EnumType.STRING)
     @Column(name = "content_type", nullable = false)
     private ContentType contentType;
-
-    @Column(name = "likes_count")
-    private Long likesCount = 0L;
-
-    @Column(name = "comments_count")
-    private Long commentsCount = 0L;
 
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
