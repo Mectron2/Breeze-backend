@@ -1,17 +1,14 @@
 package org.app.breeze.DTO;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
-public class UserDTO {
-    private Long id;
+public class RegisterDTO {
     private String username;
+    private String password;
+    private String email;
     private String bio;
     private String profileImagePath;
-    private Date createdAt;
 }
