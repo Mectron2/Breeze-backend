@@ -27,7 +27,7 @@ public class Comment {
     private String content;
 
     @Column(name = "likes_count")
-    private Integer likesCount = 0;
+    private Long likesCount = 0L;
 
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
