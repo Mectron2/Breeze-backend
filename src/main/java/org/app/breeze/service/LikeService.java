@@ -28,4 +28,8 @@ public class LikeService {
         }
         postLikesRepository.delete(postLike);
     }
+
+    public boolean isLiked(Long postId, Long userId) {
+        return postLikesRepository.existsByPostIdAndUserId(postId, userId);
+    }
 }

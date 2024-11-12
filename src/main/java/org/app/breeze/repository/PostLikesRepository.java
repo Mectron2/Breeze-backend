@@ -10,4 +10,8 @@ public interface PostLikesRepository extends JpaRepository<PostLike, Long> {
 
     @Query("SELECT COUNT(pl) > 0 FROM PostLike pl WHERE pl.postId = :postId AND pl.userId = :userId")
     boolean existsByUserIdAndPostId(@Param("userId") long userId, @Param("postId") long postId);
+
+    boolean existsByPostIdAndUserId(Long postId, Long userId);
+
+    Long countByPostId(long postId);
 }
