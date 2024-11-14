@@ -1,6 +1,7 @@
 package org.app.breeze.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.AllArgsConstructor;
 import org.app.breeze.DTO.CommentDTO;
 import org.app.breeze.View;
 import org.app.breeze.entity.Comment;
@@ -23,12 +24,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/post/comments")
+@AllArgsConstructor
 public class CommentController {
-    @Autowired
     private CommentService commentService;
-    @Autowired
     private PostRepository postRepository;
-    @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/{postId}")

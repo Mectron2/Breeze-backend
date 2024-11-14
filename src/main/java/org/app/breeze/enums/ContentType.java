@@ -5,8 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ContentType {
     TEXT("text"),
-    IMAGE("image"),
-    VIDEO("video");
+    IMAGE("image");
 
     private final String value;
 

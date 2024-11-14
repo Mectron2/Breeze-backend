@@ -1,6 +1,7 @@
 package org.app.breeze.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.AllArgsConstructor;
 import org.app.breeze.DTO.PostDto;
 import org.app.breeze.View;
 import org.app.breeze.entity.Post;
@@ -26,20 +27,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
+@AllArgsConstructor
 public class PostController {
 
     private final PostService postService;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final UserService userService;
-
-    @Autowired
-    public PostController(PostService postService, PostRepository postRepository, UserRepository userRepository, UserService userService) {
-        this.postService = postService;
-        this.postRepository = postRepository;
-        this.userRepository = userRepository;
-        this.userService = userService;
-    }
 
     @GetMapping
     public List<PostDto> getAllPosts() {
