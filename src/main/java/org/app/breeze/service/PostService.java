@@ -56,9 +56,7 @@ public class PostService {
         postDto.setContentType(post.getContentType());
         postDto.setCreatedAt(post.getCreatedAt());
 
-        List<CommentDTO> commentDTOS = commentService.getCommentsForPost(post.getId());
-        postDto.setComments(commentDTOS);
-        postDto.setCommentsCount((long) commentDTOS.size());
+        postDto.setCommentsCount((long) commentService.getCommentsForPost(post.getId()).size());
 
         postDto.setLikesCount(postLikesRepository.countByPostId(post.getId()));
 

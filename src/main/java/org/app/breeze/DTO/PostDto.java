@@ -32,9 +32,6 @@ public class PostDto {
     private ContentType contentType;
 
     @JsonView(View.Public.class)  // Только для публичного представления
-    private List<CommentDTO> comments;
-
-    @JsonView(View.Public.class)  // Только для публичного представления
     private Long commentsCount;
 
     @JsonView(View.Public.class)
