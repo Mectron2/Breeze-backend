@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -13,5 +14,5 @@ public class UserDTO {
     private String username;
     private String bio;
     private String profileImagePath;
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }

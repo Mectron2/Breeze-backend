@@ -8,6 +8,7 @@ import org.app.breeze.exception.ResourceNotFoundException;
 import org.app.breeze.repository.PostRepository;
 import org.app.breeze.repository.UserRepository;
 import org.app.breeze.service.PostService;
+import org.app.breeze.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +31,14 @@ public class PostController {
     private final PostService postService;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public PostController(PostService postService, PostRepository postRepository, UserRepository userRepository) {
+    public PostController(PostService postService, PostRepository postRepository, UserRepository userRepository, UserService userService) {
         this.postService = postService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -47,7 +50,7 @@ public class PostController {
     @JsonView(View.Create.class)
     @PostMapping
     public ResponseEntity<Post> createPost(@AuthenticationPrincipal User user, @RequestBody PostDto postDto) {
-        postDto.setUserId(userRepository.getIdByUsername(user.getUsername()));
+        postDto.setUser(userService.convertToUserDto(userRepository.findByUsername(user.getUsername()).get()));
         Post savedPost = postService.savePost(postDto);
         return new ResponseEntity<>(savedPost, HttpStatus.CREATED);
     }

@@ -4,10 +4,12 @@ import org.app.breeze.DTO.CommentDTO;
 import org.app.breeze.DTO.PostDto;
 import org.app.breeze.entity.Comment;
 import org.app.breeze.entity.Post;
+import org.app.breeze.entity.User;
 import org.app.breeze.enums.ContentType;
 import org.app.breeze.repository.CommentRepository;
 import org.app.breeze.repository.PostLikesRepository;
 import org.app.breeze.repository.PostRepository;
+import org.app.breeze.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,12 +25,16 @@ public class PostService {
     private final PostRepository postRepository;
     private final CommentService commentService;
     private final PostLikesRepository postLikesRepository;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public PostService(PostRepository postRepository, CommentService commentService, PostLikesRepository postLikesRepository) {
+    public PostService(PostRepository postRepository, CommentService commentService, PostLikesRepository postLikesRepository, UserRepository userRepository, UserService userService) {
         this.postRepository = postRepository;
         this.commentService = commentService;
         this.postLikesRepository = postLikesRepository;
+        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     public List<PostDto> getAllPosts() {
@@ -42,7 +48,8 @@ public class PostService {
     public PostDto convertToPostDto(Post post) {
         PostDto postDto = new PostDto();
         postDto.setId(post.getId());
-        postDto.setUserId(post.getUserId());
+        User user = userRepository.findById(post.getUserId()).get();
+        postDto.setUser(userService.convertToUserDto(user));
         postDto.setContent(post.getContent());
         postDto.setTitle(post.getTitle());
         postDto.setImagePath(post.getImagePath());
@@ -60,7 +67,7 @@ public class PostService {
 
     public Post savePost(@RequestBody PostDto postDto) {
         Post postEntity = new Post(
-                postDto.getUserId(),
+                postDto.getUser().getId(),
                 postDto.getTitle(),
                 postDto.getImagePath(),
                 postDto.getContent(),

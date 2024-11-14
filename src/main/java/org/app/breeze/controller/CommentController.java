@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/post/comments/{postId}")
+@RequestMapping("/api/post/comments")
 public class CommentController {
     @Autowired
     private CommentService commentService;
@@ -31,7 +31,7 @@ public class CommentController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping()
+    @GetMapping("/{postId}")
     public ResponseEntity<List<CommentDTO>> getCommentsForPost(@PathVariable Long postId) {
         List<CommentDTO> comments = commentService.getCommentsForPost(postId);
         return ResponseEntity.ok(comments);

@@ -17,7 +17,7 @@ public class PostDto {
     private Long id;
 
     @JsonView(View.Public.class)
-    private Long userId;
+    private UserDTO user;
 
     @JsonView({View.Public.class, View.Create.class})
     private String title;
