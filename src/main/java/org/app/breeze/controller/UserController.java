@@ -2,11 +2,15 @@ package org.app.breeze.controller;
 
 import org.app.breeze.DTO.PostDto;
 import org.app.breeze.DTO.UserDTO;
+import org.app.breeze.entity.User;
+import org.app.breeze.exception.ResourceNotFoundException;
 import org.app.breeze.repository.PostRepository;
 import org.app.breeze.repository.UserRepository;
 import org.app.breeze.service.PostService;
 import org.app.breeze.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +38,7 @@ public class UserController {
     @GetMapping("id/{userId}")
     public ResponseEntity<UserDTO> getUserInfoByID(@PathVariable long userId) {
         UserDTO user = userRepository.findById(userId)
-                .map(userService::convertToUserDto).get();
+                .map(userService::convertToUserDto).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         List<PostDto> postDtos = postRepository.findByUserId(user.getId())
                 .stream()
@@ -48,8 +52,7 @@ public class UserController {
 
     @GetMapping("/{username}")
     public ResponseEntity<UserDTO> getUserInfoByUsername(@PathVariable String username) {
-        UserDTO user = userRepository.findByUsername(username)
-                .map(userService::convertToUserDto).get();
+        UserDTO user = userRepository.findByUsername(username).map(userService::convertToUserDto).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         List<PostDto> postDtos = postRepository.findByUserId(user.getId())
                 .stream()
@@ -58,5 +61,12 @@ public class UserController {
 
         user.setPostDtoList(postDtos);
         return ResponseEntity.ok(user);
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("WhoAmI")
+    public ResponseEntity<UserDTO> whoAmI(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
+        UserDTO currentUser = userService.convertToUserDto(userRepository.findByUsername(user.getUsername()).orElseThrow(() -> new ResourceNotFoundException("User not found")));
+        return ResponseEntity.ok(currentUser);
     }
 }

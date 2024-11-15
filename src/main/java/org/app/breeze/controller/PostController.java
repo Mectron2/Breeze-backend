@@ -10,7 +10,6 @@ import org.app.breeze.repository.PostRepository;
 import org.app.breeze.repository.UserRepository;
 import org.app.breeze.service.PostService;
 import org.app.breeze.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

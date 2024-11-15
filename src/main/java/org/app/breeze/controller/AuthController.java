@@ -22,18 +22,11 @@ public class AuthController {
     private AuthService authService;
     private RegisterService registerService;
 
-    // Build Login REST API
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(@RequestBody LoginDto loginDto){
-
-        //01 - Receive the token from AuthService
         String token = authService.login(loginDto);
-
-        //02 - Set the token as a response using JwtAuthResponse Dto class
         AuthResponseDto authResponseDto = new AuthResponseDto();
         authResponseDto.setAccessToken(token);
-
-        //03 - Return the response to the user
         return new ResponseEntity<>(authResponseDto, HttpStatus.OK);
     }
 

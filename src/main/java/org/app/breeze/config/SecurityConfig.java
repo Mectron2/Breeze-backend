@@ -19,11 +19,7 @@ import org.springframework.stereotype.Component;
 @EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig {
-
-    private UserDetailsService userDetailsService;
-
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
-
     private JwtAuthenticationFilter authenticationFilter;
 
     @Bean

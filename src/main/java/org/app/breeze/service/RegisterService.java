@@ -31,6 +31,8 @@ public class RegisterService {
         user.setUsername(registerDTO.getUsername());
         user.setPasswordHash(passwordEncoder.encode(registerDTO.getPassword()));
         user.setEmail(registerDTO.getEmail());
+        user.setProfileImagePath(registerDTO.getProfileImagePath());
+        user.setBio(registerDTO.getBio());
         userRepository.save(user);
 
         UserRole userRole = new UserRole();
