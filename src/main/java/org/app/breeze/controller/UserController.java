@@ -1,8 +1,8 @@
 package org.app.breeze.controller;
 
+import org.app.breeze.DTO.CurrentUserDTO;
 import org.app.breeze.DTO.PostDto;
 import org.app.breeze.DTO.UserDTO;
-import org.app.breeze.entity.User;
 import org.app.breeze.exception.ResourceNotFoundException;
 import org.app.breeze.repository.PostRepository;
 import org.app.breeze.repository.UserRepository;
@@ -65,8 +65,11 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("WhoAmI")
-    public ResponseEntity<UserDTO> whoAmI(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
-        UserDTO currentUser = userService.convertToUserDto(userRepository.findByUsername(user.getUsername()).orElseThrow(() -> new ResourceNotFoundException("User not found")));
+    public ResponseEntity<CurrentUserDTO> whoAmI(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
+        CurrentUserDTO currentUser = new CurrentUserDTO();
+        currentUser.setUser(userService.convertToUserDto(userRepository.findByUsername(user.getUsername()).orElseThrow(() -> new ResourceNotFoundException("User not found"))));
+        currentUser.setAuthorities(user.getAuthorities());
+
         return ResponseEntity.ok(currentUser);
     }
 }

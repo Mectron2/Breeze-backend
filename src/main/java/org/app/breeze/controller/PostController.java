@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -60,4 +63,24 @@ public class PostController {
         PostDto postDto = postService.convertToPostDto(post);
         return ResponseEntity.ok(postDto);
     }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<?> deletePostById(@AuthenticationPrincipal User user, @PathVariable Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found."));
+
+        Long currentUserId = userRepository.getIdByUsername(user.getUsername());
+
+        boolean isAdmin = user.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+        if (Objects.equals(post.getUserId(), currentUserId) || isAdmin) {
+            postRepository.delete(post);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
+
 }
