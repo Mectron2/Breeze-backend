@@ -31,7 +31,11 @@ public class RegisterService {
         user.setUsername(registerDTO.getUsername());
         user.setPasswordHash(passwordEncoder.encode(registerDTO.getPassword()));
         user.setEmail(registerDTO.getEmail());
-        user.setProfileImagePath(registerDTO.getProfileImagePath());
+        if (registerDTO.getProfileImagePath() != null) {
+            user.setProfileImagePath(registerDTO.getProfileImagePath());
+        } else {
+            user.setProfileImagePath("http://localhost:8080/api/files/default_user_icon.jpg");
+        }
         user.setBio(registerDTO.getBio());
         userRepository.save(user);
 

@@ -39,4 +39,7 @@ public class PostDto {
 
     @JsonView(View.Public.class)
     private LocalDateTime createdAt;
+
+    @JsonView(View.Public.class)
+    private boolean liked;
 }

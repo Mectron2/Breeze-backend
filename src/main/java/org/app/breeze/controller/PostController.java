@@ -8,6 +8,7 @@ import org.app.breeze.entity.Post;
 import org.app.breeze.exception.ResourceNotFoundException;
 import org.app.breeze.repository.PostRepository;
 import org.app.breeze.repository.UserRepository;
+import org.app.breeze.service.LikeService;
 import org.app.breeze.service.PostService;
 import org.app.breeze.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -36,10 +37,20 @@ public class PostController {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final LikeService likeService;
 
     @GetMapping
-    public List<PostDto> getAllPosts() {
-        return postService.getAllPosts();
+    public List<PostDto> getAllPosts(@AuthenticationPrincipal User user) {
+        List<PostDto> posts = postService.getAllPosts();
+        if (user != null) {
+            Long userId = userRepository.getIdByUsername(user.getUsername());
+            for (PostDto post : posts) {
+                post.setLiked(likeService.isLiked(post.getId(), userId));
+            }
+        } else {
+            posts.forEach(post -> post.setLiked(false));
+        }
+        return posts;
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
