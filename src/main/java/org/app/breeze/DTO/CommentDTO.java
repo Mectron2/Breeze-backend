@@ -11,6 +11,9 @@ import org.app.breeze.entity.User;
 @Setter
 @Getter
 public class CommentDTO {
+    @JsonView(View.Public.class)
+    private Long id;
+
     @JsonView(View.Create.class)
     private Long postId;
 

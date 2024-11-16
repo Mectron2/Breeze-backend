@@ -39,6 +39,7 @@ public class CommentService {
                     dto.setUser(userService.convertToUserDto(user));
                     dto.setContent(comment.getContent());
                     dto.setPostId(comment.getPost().getId());
+                    dto.setId(comment.getId());
                     return dto;
                 })
                 .collect(Collectors.toList());
