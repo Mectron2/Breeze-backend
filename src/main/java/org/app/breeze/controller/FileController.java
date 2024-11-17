@@ -1,6 +1,7 @@
 package org.app.breeze.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,13 +25,26 @@ import java.util.Date;
 @RequestMapping("/api/files")
 public class FileController {
     private final Path uploadDir;
+    private static final String DEFAULT_USER_ICON = "default_user_icon.jpg";
 
     public FileController(@Value("${file.upload-dir:uploads}") String uploadDir) {
         this.uploadDir = Paths.get(uploadDir).toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.uploadDir);
+            copyDefaultUserIcon();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to create file folder: ", e);
+            throw new RuntimeException("Failed to create file folder or copy default icon: ", e);
+        }
+    }
+
+    private void copyDefaultUserIcon() throws IOException {
+        Path targetLocation = this.uploadDir.resolve(DEFAULT_USER_ICON);
+        if (Files.notExists(targetLocation)) {
+            Resource resource = new ClassPathResource("default_user_icon.jpg");
+            try (InputStream inputStream = resource.getInputStream()) {
+                Files.copy(inputStream, targetLocation, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Default user icon copied to " + targetLocation);
+            }
         }
     }
 
