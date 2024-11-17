@@ -26,9 +26,6 @@ public class Comment {
     @Column(name = "content", nullable = false, length = 255)
     private String content;
 
-    @Column(name = "likes_count")
-    private Long likesCount = 0L;
-
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;

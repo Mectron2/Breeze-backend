@@ -1,2 +1,2 @@
 alter table users_roles
-drop column id;
+drop column if exists id;
