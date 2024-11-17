@@ -7,8 +7,6 @@ import org.app.breeze.View;
 import org.app.breeze.enums.ContentType;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Setter
 @Getter
@@ -31,7 +29,7 @@ public class PostDto {
     @JsonView({View.Public.class, View.Create.class})
     private ContentType contentType;
 
-    @JsonView(View.Public.class)  // Только для публичного представления
+    @JsonView(View.Public.class)
     private Long commentsCount;
 
     @JsonView(View.Public.class)

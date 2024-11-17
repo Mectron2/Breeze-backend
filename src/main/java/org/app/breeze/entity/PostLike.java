@@ -1,6 +1,5 @@
 package org.app.breeze.entity;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -10,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.app.breeze.View;
 import org.app.breeze.entity.IdClasses.PostLikeId;
 
 @Getter

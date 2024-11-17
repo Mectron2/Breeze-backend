@@ -1,9 +1,7 @@
 package org.app.breeze.service;
 
 import org.app.breeze.DTO.CommentDTO;
-import org.app.breeze.DTO.UserDTO;
 import org.app.breeze.entity.Comment;
-import org.app.breeze.entity.Post;
 import org.app.breeze.entity.User;
 import org.app.breeze.repository.CommentRepository;
 import org.app.breeze.repository.UserRepository;

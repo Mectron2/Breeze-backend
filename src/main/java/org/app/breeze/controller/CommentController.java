@@ -5,14 +5,12 @@ import lombok.AllArgsConstructor;
 import org.app.breeze.DTO.CommentDTO;
 import org.app.breeze.View;
 import org.app.breeze.entity.Comment;
-import org.app.breeze.entity.Post;
 import org.app.breeze.exception.ResourceNotFoundException;
 import org.app.breeze.repository.CommentRepository;
 import org.app.breeze.repository.PostRepository;
 import org.app.breeze.repository.UserRepository;
 import org.app.breeze.service.CommentService;
 import org.app.breeze.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,7 +48,7 @@ public class CommentController {
     @JsonView(View.Public.class)
     public ResponseEntity<CommentDTO> addComment(
             @AuthenticationPrincipal org.springframework.security.core.userdetails.User user,
-            @JsonView(View.Create.class) @RequestBody CommentDTO commentRequestDTO) {  // применяется к запросу
+            @JsonView(View.Create.class) @RequestBody CommentDTO commentRequestDTO) {
 
         Comment comment = new Comment(
                 postRepository.findById(commentRequestDTO.getPostId())

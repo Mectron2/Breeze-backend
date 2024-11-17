@@ -1,12 +1,8 @@
 package org.app.breeze.service;
 
-import org.app.breeze.DTO.CommentDTO;
 import org.app.breeze.DTO.PostDto;
-import org.app.breeze.entity.Comment;
 import org.app.breeze.entity.Post;
 import org.app.breeze.entity.User;
-import org.app.breeze.enums.ContentType;
-import org.app.breeze.repository.CommentRepository;
 import org.app.breeze.repository.PostLikesRepository;
 import org.app.breeze.repository.PostRepository;
 import org.app.breeze.repository.UserRepository;
@@ -15,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

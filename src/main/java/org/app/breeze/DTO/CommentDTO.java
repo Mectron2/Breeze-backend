@@ -1,14 +1,11 @@
 package org.app.breeze.DTO;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.app.breeze.View;
-import org.app.breeze.entity.User;
 
 @Setter
 @Getter

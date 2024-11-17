@@ -1,9 +1,5 @@
 package org.app.breeze.entity;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,11 +14,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.PrePersist;
-import org.app.breeze.DTO.UserDTO;
 import org.app.breeze.enums.ContentType;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Setter
 @Getter
@@ -54,7 +48,6 @@ public class Post {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
-    // Метод для автоматической установки createdAt перед сохранением
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
@@ -68,7 +61,6 @@ public class Post {
         this.contentType = contentType;
     }
 
-    // Пустой конструктор
     public Post() {
     }
 }

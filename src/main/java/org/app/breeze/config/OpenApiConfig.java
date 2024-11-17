@@ -15,9 +15,9 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("My API")
+                .info(new Info().title("Breeze")
                         .version("1.0")
-                        .description("API description"))
+                        .description("Breeze REST API"))
                 .addSecurityItem(new SecurityRequirement().addList("JWT"))
                 .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes("JWT", new SecurityScheme()

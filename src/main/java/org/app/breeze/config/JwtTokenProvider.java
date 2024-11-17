@@ -37,7 +37,6 @@ public class JwtTokenProvider {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    // extract username from JWT token
     public String getUsername(String token){
 
         return Jwts.parser()
@@ -48,13 +47,11 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
-    // validate JWT token
     public boolean validateToken(String token){
         Jwts.parser()
                 .verifyWith((SecretKey) key())
                 .build()
                 .parse(token);
         return true;
-
     }
 }

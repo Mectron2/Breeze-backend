@@ -33,7 +33,6 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
-    // Метод для автоматической установки createdAt перед сохранением
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
@@ -45,7 +44,6 @@ public class Comment {
         this.content = content;
     }
 
-    // Пустой конструктор
     public Comment() {
     }
 }

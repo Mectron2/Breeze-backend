@@ -1,17 +1,13 @@
 package org.app.breeze.controller;
 
 import lombok.AllArgsConstructor;
-import org.app.breeze.entity.Post;
 import org.app.breeze.entity.PostLike;
-import org.app.breeze.entity.User;
 import org.app.breeze.repository.PostLikesRepository;
 import org.app.breeze.repository.UserRepository;
 import org.app.breeze.service.LikeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
