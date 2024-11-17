@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    @Query("select p from Post p where p.title like %:title%")
+    @Query("select p from Post p where p.title like %:title% order by p.createdAt DESC")
     List<Post> findByTitleContaining(@Param("title") String title);
 
     @Query("select p from Post p where p.userId = :userId order by p.createdAt DESC")

@@ -63,15 +63,25 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public List<PostDto> findPostsByTitle(@RequestParam String title) {
-        return postService.findPostsByTitle(title);
+    public List<PostDto> findPostsByTitle(@AuthenticationPrincipal User user, @RequestParam String title) {
+        List<PostDto> posts = postService.findPostsByTitle(title);
+        if (user != null) {
+            Long userId = userRepository.getIdByUsername(user.getUsername());
+            for (PostDto post : posts) {
+                post.setLiked(likeService.isLiked(post.getId(), userId));
+            }
+        } else {
+            posts.forEach(post -> post.setLiked(false));
+        }
+        return posts;
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/getById")
-    public ResponseEntity<PostDto> getPostById(@RequestParam("postId") Long id) {
+    public ResponseEntity<PostDto> getPostById(@AuthenticationPrincipal User user, @RequestParam("postId") Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post not found."));
         PostDto postDto = postService.convertToPostDto(post);
+        postDto.setLiked(likeService.isLiked(post.getId(), userRepository.getIdByUsername(user.getUsername())));
         return ResponseEntity.ok(postDto);
     }
 

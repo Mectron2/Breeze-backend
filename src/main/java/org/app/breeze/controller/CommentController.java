@@ -11,6 +11,7 @@ import org.app.breeze.repository.CommentRepository;
 import org.app.breeze.repository.PostRepository;
 import org.app.breeze.repository.UserRepository;
 import org.app.breeze.service.CommentService;
+import org.app.breeze.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class CommentController {
     private final CommentRepository commentRepository;
+    private final UserService userService;
     private CommentService commentService;
     private PostRepository postRepository;
     private UserRepository userRepository;
@@ -45,15 +47,33 @@ public class CommentController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping
-    @JsonView(View.Create.class)
-    public ResponseEntity<Comment> addComment(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user, @RequestBody CommentDTO commentDTO) {
-        Comment comment = new Comment();
-        comment.setPost(postRepository.findById(commentDTO.getPostId()).get());
-        comment.setUserId(userRepository.getIdByUsername(user.getUsername()));
-        comment.setContent(commentDTO.getContent());
+    @JsonView(View.Public.class)
+    public ResponseEntity<CommentDTO> addComment(
+            @AuthenticationPrincipal org.springframework.security.core.userdetails.User user,
+            @JsonView(View.Create.class) @RequestBody CommentDTO commentRequestDTO) {  // применяется к запросу
+
+        Comment comment = new Comment(
+                postRepository.findById(commentRequestDTO.getPostId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Post not found")),
+                userRepository.getIdByUsername(user.getUsername()),
+                commentRequestDTO.getContent()
+        );
+
         Comment savedComment = commentService.addComment(comment);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
+
+        CommentDTO commentDTOResponse = new CommentDTO(
+                savedComment.getId(),
+                savedComment.getPost().getId(),
+                userService.convertToUserDto(
+                        userRepository.findById(savedComment.getUserId())
+                                .orElseThrow(() -> new ResourceNotFoundException("User not found"))
+                ),
+                savedComment.getContent()
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(commentDTOResponse);
     }
+
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/{commentId}")
